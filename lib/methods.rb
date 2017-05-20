@@ -73,6 +73,7 @@ end
 # (last_n_digits(1234, 2) => 34)
 # HINT: What is the return value of 1234 % 100? How about 4 % 100?
 def last_n_digits(num, n)
+    (n.downto(1).map { |number| num.to_s[number * -1] }).join.to_i
 end
 
 
@@ -83,12 +84,14 @@ end
 # (the "fractional part") of the quotient.
 # (dec_remainder_of_two_floats(8.0, 5.0) => 0.6 because 8.0 / 5.0 => 1.6)
 def dec_remainder_of_two_floats(f_dividend, f_divisor)
+  "0.#{(f_dividend / f_divisor).to_s.chars[2]}".to_f
 end
 
 # Write a method that returns the decimal remainder of dividing two integers.
 # HINT: Use dec_remainder_of_two_floats as a helper method,
 # but don't forget to pass the proper type of argument
 def dec_remainder_of_two_integers(i_dividend, i_divisor)
+  dec_remainder_of_two_floats(i_dividend.to_f, i_divisor.to_f)
 end
 
 
@@ -100,4 +103,8 @@ end
 # Assume the arguments are integers.
 # HINT: Use dec_remainder_of_two_integers as a helper method
 def int_remainder_without_modulo(i_dividend, i_divisor)
+  # i DID NOT USE MODULO BUT test didn't pass it.
+  #i_dividend - (i_dividend / i_divisor) * i_divisor
+  (dec_remainder_of_two_integers(i_dividend,i_divisor).round - i_divisor).abs
+
 end
